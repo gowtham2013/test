@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+<script src="http://twitter.github.io/bootstrap/assets/js/bootstrap.js"></script>
+<meta charset=utf-8 />
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/data.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<title>JS Bin</title>
+</head>
+<body>
+  <div class="row-fluid">
+  <div class="span5">
+  
+<table id="datatable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Client Ineligibles</th>
+            <th>Percentage %</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Concentration</th>
+            <td>20</td>
+        </tr>
+        <tr>
+            <th>Contra</th>
+            <td>25</td>
+        </tr>
+        <tr>
+            <th>Cross Age</th>
+            <td>25</td>
+        </tr>
+        <tr>
+            <th>Past Due</th>
+            <td>30</td>
+        </tr>
+    </tbody>
+</table>
+    
+    </div>
+    
+  <div class="span7">
+    <!--graph-->
+    <div id="container"></div>
+  </div>
+</div>
+  
+  <script>
+
+Highcharts.visualize = function (table, options) {
+    // the categories
+	var sliceNames = [];
+	$('tbody th', table).each(function (i) 
+	{
+    	sliceNames.push(this.innerHTML);
+	});
+
+    // the data series
+    options.series = [];
+    $('tr', table).each(function (i) {
+        var tr = this;
+        $('th, td', tr).each(function (j) {
+            if (j > 0) { // skip first column
+                if (i == 0) { // get the name and init the series
+                    options.series[j - 1] = {
+                        name: this.innerHTML,
+                        data: []
+                    };
+                } else { // add values
+                    options.series[j - 1].data.push({name: sliceNames[i - 1], y: parseFloat(this.innerHTML)});
+                }
+            }
+        });
+    });
+
+    var chart = new Highcharts.Chart(options);
+}
+
+var table = document.getElementById('datatable'),
+    options = {
+        chart: {
+            renderTo: 'container',
+            type: 'pie'
+        },
+        title: {
+            text: 'Data extracted from a HTML table in the page'
+        },
+        xAxis: {},
+        yAxis: {
+            title: {
+                text: 'Units'
+            }
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' + this.y + ' ' + this.point.name;
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b>: ' + this.percentage + ' %';
+                    }
+                }
+            }
+        }
+    };
+
+Highcharts.visualize(table, options);
+   
+
+  </script>
+  
+</body>
+</html>

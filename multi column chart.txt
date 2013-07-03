@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+<script src="http://twitter.github.io/bootstrap/assets/js/bootstrap.js"></script>
+<meta charset=utf-8 />
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/data.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  
+<title>JS Bin</title>
+</head>
+<body>
+  <div class="row-fluid">
+  <div class="span5">
+   <!-- Table -->
+     <table class="table table-striped" id="datatable">
+	<thead>
+		<tr>
+			    <th>Borrower</th>
+				<th>3 months %</th>
+                <th>6 months %</th>
+                <th>12 months %</th>
+                <th>Average %</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr> 
+			<th>Borrower 6</th>
+            <td>12.0</td>
+			<td>11.0</td>
+            <td>12.0</td>
+            <td>11.7</td>
+		</tr>
+		<tr>
+			<th>Borrower 9</th>
+			<td>10.1</td>
+			<td>9.8</td>
+            <td>11.0</td>
+            <td>10.3</td>
+		</tr>
+        <tr>
+			<th>Borrower 1</th>
+			<td>9.0</td>
+			<td>8.0</td>
+            <td>7.0</td>
+            <td>8.0</td>
+		</tr>
+        <tr>
+			<th>Borrower 5</th>
+			<td>8.0</td>
+			<td>8.0</td>
+            <td>7.0</td>
+            <td>7.7</td>
+		</tr>
+        <tr>
+			<th>Borrower 7</th>
+			<td>6.6</td>
+			<td>6.3</td>
+            <td>7.5</td>
+            <td>6.8</td>
+		</tr>
+        <tr>
+			<th>Borrower 2</th>
+			<td>5.0</td>
+			<td>8.0</td>
+            <td>7.0</td>
+            <td>6.7</td>
+		</tr>
+      <tr>
+			<th>Borrower 4</th>
+			<td>3.5</td>
+			<td>3.8</td>
+            <td>8.0</td>
+            <td>5.1</td>
+		</tr>
+      <tr>
+			<th>Borrower 8</th>
+			<td>3.7</td>
+			<td>5.7</td>
+            <td>4.7</td>
+            <td>4.7</td>
+		</tr>
+      <tr>
+			<th>Borrower 10</th>
+			<td>2.0</td>
+			<td>3.0</td>
+            <td>2.0</td>
+            <td>2.3</td>
+		</tr>
+      <tr>
+			<th>Borrower 3</th>
+			<td>1.2</td>
+			<td>1.5</td>
+            <td>2.1</td>
+            <td>1.6</td>
+		</tr>
+       
+	
+	</tbody>
+</table>
+   
+    
+  </div>
+    
+  <div class="span7">
+    <!--graph-->
+    <div id="container"></div>
+  </div>
+</div>
+    
+ 
+  
+  
+  
+  <script>
+    
+    $(document).ready(function() {
+           $('#datatable').dataTable(); 
+        } );
+    
+  
+ 
+    $(function () {
+    $('#container').highcharts({
+        data: {
+            table: document.getElementById('datatable')
+        },
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Data extracted from a HTML table in the page'
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: 'Units'
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                return '<b>'+ this.series.name +'</b><br/>'+
+                    this.y +' '+ this.x.toLowerCase();
+            }
+        }
+    });
+});
+
+
+    
+  </script>
+  
+</body>
+</html>
